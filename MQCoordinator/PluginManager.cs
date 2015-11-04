@@ -58,10 +58,20 @@ namespace MQCoordinator
             Type type;
             if (!LoadedPlugins.TryGetValue(pluginName, out type)) { return null; }
 
+            //Could load these into a static dictionary if we didn't need instance members of the plugin created each time (e.g. like IoC Singletons or something)
             var ctor = type.GetConstructor(new Type[] { });
             var pluginInstance = (IMessageDispatchPlugin)ctor?.Invoke(new object[] { });
 
             return pluginInstance;
+        }
+
+        public static void HandleMessageForLoadedPlugins(ExampleMessage message)
+        {
+            foreach (var loadedPluginEntry in LoadedPlugins.Keys)
+            {
+                var plugin = GetPluginInstance(loadedPluginEntry);
+                plugin.HandleMessage(message); //Could async this if needed
+            }
         }
     }
 }

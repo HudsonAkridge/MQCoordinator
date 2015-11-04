@@ -9,10 +9,6 @@ namespace MQCoordinator.KbbPlugin
     {
         public void HandleMessage(ExampleMessage exampleMessage)
         {
-            //var client = new Facebook.FacebookClient();
-            //var url = client.GetLoginUrl("zuck");
-            //var zuckerberg = client.Get("zuck");
-
             var directionRequest = new DirectionsRequest()
             {
                 Origin = "607 clear spring ln. leander tx 78641",
@@ -21,7 +17,7 @@ namespace MQCoordinator.KbbPlugin
 
             var directions = GoogleMapsApi.GoogleMaps.Directions.Query(directionRequest);
 
-            var testFile = File.CreateText(Directory.GetCurrentDirectory() + "\\ItWorks.txt");
+            var testFile = File.CreateText(Directory.GetCurrentDirectory() + "\\GoogleDirections.txt");
             foreach (var step in directions?.Routes?.FirstOrDefault()?.Legs?.FirstOrDefault()?.Steps)
             {
                 testFile.WriteLine(step.HtmlInstructions); 
