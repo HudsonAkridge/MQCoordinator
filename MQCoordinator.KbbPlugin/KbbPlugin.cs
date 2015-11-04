@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using System.Reflection;
 using GoogleMapsApi.Entities.Directions.Request;
 using MQCoordinator.Plugins.Interfaces;
 
@@ -17,7 +16,7 @@ namespace MQCoordinator.KbbPlugin
             var directionRequest = new DirectionsRequest()
             {
                 Origin = "607 clear spring ln. leander tx 78641",
-                Destination = "Sarasota, Florida",
+                Destination = exampleMessage.BodyText //TODO: JSON Deserialization? Common message format? Unsure here
             };
 
             var directions = GoogleMapsApi.GoogleMaps.Directions.Query(directionRequest);

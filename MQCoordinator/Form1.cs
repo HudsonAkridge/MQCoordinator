@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
-using MQCoordinator.Plugins.Interfaces;
+using MQCoordinator.Messaging;
 
 namespace MQCoordinator
 {
@@ -15,24 +13,14 @@ namespace MQCoordinator
 
         private void ux_LoadAndRun_Click(object sender, EventArgs e)
         {
-            var pluginDirs = Directory.GetDirectories(Directory.GetCurrentDirectory());
-            foreach (var pluginDir in pluginDirs)
-            {
-                var pluginPaths = Directory.GetFiles(pluginDir, "*.plug");
-                foreach (var pluginPath in pluginPaths)
-                {
-                    var pluginAssembly = Assembly.LoadFrom(pluginPath);
-                    var types = pluginAssembly.GetTypes();
-                    foreach (var type in types)
-                    {
-                        if (type.GetInterface(typeof(IMessageDispatchPlugin).Name, false) == null) continue;
+            PluginManager.LoadAllPlugins();
+        }
 
-                        var ctor = type.GetConstructor(new Type[] { });
-                        var pluginInstance = (IMessageDispatchPlugin)ctor?.Invoke(new object[] { });
-                        pluginInstance?.HandleMessage(new ExampleMessage { BodyText = "Here's a Test" });
-                    }
-                }
-            }
+        private void ux_RunPlugin_Click(object sender, EventArgs e)
+        {
+            var pluginName = ux_pluginName.Text;
+            var plugin = PluginManager.GetPluginInstance(pluginName);
+            plugin.HandleMessage(new KbbMessage("Sarasota, Florida"));
         }
     }
 }
