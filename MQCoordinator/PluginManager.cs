@@ -8,6 +8,12 @@ using MQCoordinator.Plugins.Interfaces;
 
 namespace MQCoordinator
 {
+    /// <summary>
+    /// Used for loading "plugins" dynamically. Really, this is just a way to defer loading of external code and it's dependencies to deal with a specific message
+    /// Some thoughts:
+    ///     Could build these into their own AppDomains to isolate dependency conflicts (happened to me testing some things out here). Could then unload that app domain after a certain time to reclaim resources
+    ///     Could build a watchdog that looks at the folder and loads plugins dynamically. If a folder is added or modified it unloads/reloads that app domain and plugin assembly/dependencies. If a folder is removed, it unloads the associated app domain
+    /// </summary>
     public static class PluginManager
     {
         private static readonly Lazy<ConcurrentDictionary<string, Type>> _loadedPlugins = new Lazy<ConcurrentDictionary<string, Type>>(() => new ConcurrentDictionary<string, Type>());
@@ -44,13 +50,14 @@ namespace MQCoordinator
                 //LoadFrom is an implicit load with any depenencies you find in the folder with the dll
                 var pluginAssembly = Assembly.LoadFrom(pluginPath);
                 pluginType = pluginAssembly.GetTypes().SingleOrDefault(x => x.GetInterface(typeof(IMessageDispatchPlugin).Name, false) != null);
-                
+                Console.WriteLine("Loaded plugin: {0} from path: {1}.", pluginAssembly.FullName, pluginPath);
+
                 var dependencyPaths = Directory.GetFiles(pluginDir, "*.dll");
                 foreach (var dependencyPath in dependencyPaths)
                 {
                     var assembly = Assembly.LoadFrom(dependencyPath);
                     var types = assembly.GetTypes();
-                    Console.WriteLine(types.Count());
+                    Console.WriteLine("Loaded {0} types from {1} assembly.", types.Count(), assembly.FullName);
                 }
             }
             catch (Exception ex)
