@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MQCoordinator.Plugins.Interfaces;
 using RabbitMQ.Client;
@@ -49,11 +50,13 @@ namespace MQCoordinator.Messaging
                 {
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
+                    Console.WriteLine(" [x] Received {0}", message);
                     PluginManager.HandleMessageForLoadedPlugins(new ExampleMessage { BodyText = message });
                 };
                 channel.BasicConsume(queue: "VehicleQueue",
                                      noAck: true,
                                      consumer: consumer);
+                Thread.Sleep(new TimeSpan(0, 0, 10));
             }
         }
     }
