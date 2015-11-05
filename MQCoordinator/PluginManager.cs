@@ -53,12 +53,7 @@ namespace MQCoordinator
                 Console.WriteLine("Loaded plugin: {0} from path: {1}.", pluginAssembly.FullName, pluginPath);
 
                 var dependencyPaths = Directory.GetFiles(pluginDir, "*.dll");
-                foreach (var dependencyPath in dependencyPaths)
-                {
-                    var assembly = Assembly.LoadFrom(dependencyPath);
-                    var types = assembly.GetTypes();
-                    Console.WriteLine("Loaded {0} types from {1} assembly.", types.Count(), assembly.FullName);
-                }
+                LoadExternalDependencies(dependencyPaths);
             }
             catch (Exception ex)
             {
@@ -66,6 +61,16 @@ namespace MQCoordinator
             }
 
             return pluginType != null;
+        }
+
+        private static void LoadExternalDependencies(string[] dependencyPaths)
+        {
+            foreach (var dependencyPath in dependencyPaths)
+            {
+                var assembly = Assembly.LoadFrom(dependencyPath);
+                var types = assembly.GetTypes();
+                Console.WriteLine("Loaded {0} types from {1} assembly.", types.Count(), assembly.FullName);
+            }
         }
 
         public static IMessageDispatchPlugin GetPluginInstance(string pluginName)
