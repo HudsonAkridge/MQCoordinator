@@ -44,8 +44,16 @@ namespace MQCoordinator
                 //LoadFrom is an implicit load with any depenencies you find in the folder with the dll
                 var pluginAssembly = Assembly.LoadFrom(pluginPath);
                 pluginType = pluginAssembly.GetTypes().SingleOrDefault(x => x.GetInterface(typeof(IMessageDispatchPlugin).Name, false) != null);
+                
+                var dependencyPaths = Directory.GetFiles(pluginDir, "*.dll");
+                foreach (var dependencyPath in dependencyPaths)
+                {
+                    var assembly = Assembly.LoadFrom(dependencyPath);
+                    var types = assembly.GetTypes();
+                    Console.WriteLine(types.Count());
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

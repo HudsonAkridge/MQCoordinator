@@ -17,7 +17,7 @@ namespace MQCoordinator.KbbPlugin
 
             var directions = GoogleMapsApi.GoogleMaps.Directions.Query(directionRequest);
 
-            var testFile = File.CreateText(Directory.GetCurrentDirectory() + "\\GoogleDirections.txt");
+            var testFile = File.CreateText(Directory.GetCurrentDirectory() + "\\Kbb.txt");
             foreach (var step in directions?.Routes?.FirstOrDefault()?.Legs?.FirstOrDefault()?.Steps)
             {
                 testFile.WriteLine(step.HtmlInstructions); 
