@@ -34,13 +34,14 @@
             this.ux_QueueAllPlugins = new System.Windows.Forms.Button();
             this.ux_QueueItemMessageBody = new System.Windows.Forms.TextBox();
             this.ux_ListOfPlugins = new System.Windows.Forms.ComboBox();
+            this.ux_RegisterQueueHandler = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ux_LoadAndRun
             // 
             this.ux_LoadAndRun.Location = new System.Drawing.Point(22, 23);
             this.ux_LoadAndRun.Name = "ux_LoadAndRun";
-            this.ux_LoadAndRun.Size = new System.Drawing.Size(87, 23);
+            this.ux_LoadAndRun.Size = new System.Drawing.Size(250, 23);
             this.ux_LoadAndRun.TabIndex = 0;
             this.ux_LoadAndRun.Text = "LoadAllPlugins";
             this.ux_LoadAndRun.UseVisualStyleBackColor = true;
@@ -50,7 +51,7 @@
             // 
             this.ux_RunPlugin.Location = new System.Drawing.Point(22, 117);
             this.ux_RunPlugin.Name = "ux_RunPlugin";
-            this.ux_RunPlugin.Size = new System.Drawing.Size(75, 23);
+            this.ux_RunPlugin.Size = new System.Drawing.Size(250, 23);
             this.ux_RunPlugin.TabIndex = 2;
             this.ux_RunPlugin.Text = "Run Plugin";
             this.ux_RunPlugin.UseVisualStyleBackColor = true;
@@ -69,10 +70,11 @@
             // 
             this.ux_QueueAllPlugins.Location = new System.Drawing.Point(25, 194);
             this.ux_QueueAllPlugins.Name = "ux_QueueAllPlugins";
-            this.ux_QueueAllPlugins.Size = new System.Drawing.Size(181, 23);
+            this.ux_QueueAllPlugins.Size = new System.Drawing.Size(247, 23);
             this.ux_QueueAllPlugins.TabIndex = 4;
-            this.ux_QueueAllPlugins.Text = "Process Queue Item";
+            this.ux_QueueAllPlugins.Text = "Enqueue";
             this.ux_QueueAllPlugins.UseVisualStyleBackColor = true;
+            this.ux_QueueAllPlugins.Click += new System.EventHandler(this.ux_QueueAllPlugins_Click);
             // 
             // ux_QueueItemMessageBody
             // 
@@ -90,11 +92,22 @@
             this.ux_ListOfPlugins.Size = new System.Drawing.Size(247, 21);
             this.ux_ListOfPlugins.TabIndex = 6;
             // 
+            // ux_RegisterQueueHandler
+            // 
+            this.ux_RegisterQueueHandler.Location = new System.Drawing.Point(25, 250);
+            this.ux_RegisterQueueHandler.Name = "ux_RegisterQueueHandler";
+            this.ux_RegisterQueueHandler.Size = new System.Drawing.Size(247, 23);
+            this.ux_RegisterQueueHandler.TabIndex = 7;
+            this.ux_RegisterQueueHandler.Text = "Register Queue Handler";
+            this.ux_RegisterQueueHandler.UseVisualStyleBackColor = true;
+            this.ux_RegisterQueueHandler.Click += new System.EventHandler(this.ux_RegisterQueueHandler_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(284, 350);
+            this.Controls.Add(this.ux_RegisterQueueHandler);
             this.Controls.Add(this.ux_ListOfPlugins);
             this.Controls.Add(this.ux_QueueItemMessageBody);
             this.Controls.Add(this.ux_QueueAllPlugins);
@@ -116,6 +129,7 @@
         private System.Windows.Forms.Button ux_QueueAllPlugins;
         private System.Windows.Forms.TextBox ux_QueueItemMessageBody;
         private System.Windows.Forms.ComboBox ux_ListOfPlugins;
+        private System.Windows.Forms.Button ux_RegisterQueueHandler;
     }
 }
 

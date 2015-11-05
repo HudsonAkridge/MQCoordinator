@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using MQCoordinator.Messaging;
+using MQCoordinator.Plugins.Interfaces;
 
 namespace MQCoordinator
 {
@@ -23,6 +24,16 @@ namespace MQCoordinator
             var pluginName = ux_ListOfPlugins.Text;
             var plugin = PluginManager.GetPluginInstance(pluginName);
             plugin.HandleMessage(new KbbMessage("Sarasota, Florida"));
+        }
+
+        private void ux_QueueAllPlugins_Click(object sender, EventArgs e)
+        {
+            RabbitMQProcessor.Enqueue(new ExampleMessage { BodyText = ux_QueueItemMessageBody.Text });
+        }
+
+        private void ux_RegisterQueueHandler_Click(object sender, EventArgs e)
+        {
+            RabbitMQProcessor.HandleQueueItems();
         }
     }
 }

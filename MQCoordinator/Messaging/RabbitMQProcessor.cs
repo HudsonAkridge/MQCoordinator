@@ -11,7 +11,7 @@ namespace MQCoordinator.Messaging
 {
     public class RabbitMQProcessor
     {
-        public void Enqueue(ExampleMessage message)
+        public static void Enqueue(ExampleMessage message)
         {
             var factory = new ConnectionFactory { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
@@ -26,13 +26,13 @@ namespace MQCoordinator.Messaging
                 var body = Encoding.UTF8.GetBytes(message.BodyText);
 
                 channel.BasicPublish(exchange: "",
-                                     routingKey: "hello",
+                                     routingKey: "VehicleQueue",
                                      basicProperties: null,
                                      body: body);
             }
         }
 
-        public void HandleQueueItem()
+        public static void HandleQueueItems()
         {
             var factory = new ConnectionFactory { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
